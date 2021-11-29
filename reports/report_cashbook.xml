@@ -97,7 +97,7 @@
                                     <td colspan="5">
                                     </td>
                                     <td>
-                                        <span style="color: white;">Actual</span>
+                                        <span>Actual</span>
                                     </td>
                                     <!-- <td class="text-right">
                                         <span t-esc="account['debit'] - init_balance_line['debit']"
@@ -117,7 +117,7 @@
                                     <td colspan="5">
                                     </td>
                                     <td>
-                                        <span style="color: white;">Final Balance</span>
+                                        <span>Final Balance</span>
                                     </td>
                                     <!-- <td class="text-right">
                                         <span t-esc="account['debit']"
@@ -147,18 +147,18 @@
                                                 <span t-esc="line['partner_name']"/>
                                             </td>
                                             <td>
-                                                <span t-if="line['lref']" t-esc="line['lref']"/>
+                                                <t t-if="'pos_reference' in line">
+                                                    <span t-esc="line['pos_reference']"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span t-if="line['lref']" t-esc="line['lref']"/>
+                                                </t>
                                             </td>
                                             <td>
                                                 <span t-esc="line['move_name']"/>
                                             </td>
                                             <td>
-                                                <t t-if="'pos_reference' in line">
-                                                    <span t-esc="line['pos_reference']"/>
-                                                </t>
-                                                <t t-else="">
-                                                    <span t-esc="line['lname']"/>
-                                                </t>
+                                                <span t-esc="line['lname']"/>
                                             </td>
                                             <!-- <td class="text-right">
                                                 <span t-esc="line['debit']"
@@ -174,7 +174,7 @@
                                                     <t t-set="amount_value" t-value="line['debit']"/>
                                                 </t>
                                                 <t t-else="line['credit'] > 0">
-                                                    <t t-set="amount_value" t-value="line['credit']"/>
+                                                    <t t-set="amount_value" t-value="-line['credit']"/>
                                                 </t>
 
                                                 <span t-esc="amount_value"
@@ -221,18 +221,18 @@
                                         <span t-esc="line['partner_name']"/>
                                     </td>
                                     <td>
-                                        <span t-if="line['lref']" t-esc="line['lref']"/>
+                                        <t t-if="'pos_reference' in line">
+                                            <span t-esc="line['pos_reference']"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-if="line['lref']" t-esc="line['lref']"/>
+                                        </t>
                                     </td>
                                     <td>
                                         <span t-esc="line['move_name']"/>
                                     </td>
                                     <td>
-                                        <t t-if="'pos_reference' in line">
-                                            <span t-esc="line['pos_reference']"/>
-                                        </t>
-                                        <t t-else="">
-                                            <span t-esc="line['lname']"/>
-                                        </t>
+                                        <span t-esc="line['lname']"/>
                                     </td>
                                     <!-- <td class="text-right">
                                         <span t-esc="line['debit']"
@@ -248,7 +248,7 @@
                                             <t t-set="amount_value" t-value="line['debit']"/>
                                         </t>
                                         <t t-else="line['credit'] > 0">
-                                            <t t-set="amount_value" t-value="line['credit']"/>
+                                            <t t-set="amount_value" t-value="-line['credit']"/>
                                         </t>
                                         
                                         <span t-esc="amount_value"
