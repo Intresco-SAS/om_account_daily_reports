@@ -49,11 +49,11 @@
                             <th>JRNL</th>
                             <th>Partner</th>
                             <th>Ref</th>
-                            <!--th>Move</th-->
+                            <th></th>
                             <th>Entry Label</th>
                             <!-- <th>Debit</th> -->
                             <!-- <th>Credit</th> -->
-                            <th>Balance</th>
+                            <th class="text-right">Balance</th>
                             <th groups="base.group_multi_currency">Currency</th>
                         </tr>
                     </thead>
