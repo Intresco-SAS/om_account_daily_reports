@@ -14,7 +14,7 @@
     'maintainer': 'Odoo Mates',
     'support': 'odoomates@gmail.com',
     'website': 'https://www.odoomates.tech',
-    'depends': ['account'],
+    'depends': ['account', 'point_of_sale'],
     'live_test_url': '',
     'demo': [],
     'data': [
