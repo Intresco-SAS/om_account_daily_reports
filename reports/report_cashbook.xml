@@ -44,7 +44,7 @@
 
                 <table class="table table-sm table-reports">
                     <thead>
-                        <tr class="text-center">
+                        <tr>
                             <th>Date</th>
                             <th>JRNL</th>
                             <th>Partner</th>
