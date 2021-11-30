@@ -45,7 +45,7 @@
                 <table class="table table-sm table-striped">
                     <thead>
                         <tr>
-                            <th width:15%>Date</th>
+                            <th style="width:15%">Date</th>
                             <th>JRNL</th>
                             <th>Partner</th>
                             <th>Ref</th>
