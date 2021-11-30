@@ -49,7 +49,7 @@
                             <th>JRNL</th>
                             <th>Partner</th>
                             <th>Ref</th>
-                            <th>Move</th>
+                            <!--th>Move</th-->
                             <th>Entry Label</th>
                             <!-- <th>Debit</th> -->
                             <!-- <th>Credit</th> -->
@@ -154,9 +154,9 @@
                                                     <span t-if="line['lref']" t-esc="line['lref']"/>
                                                 </t>
                                             </td>
-                                            <td>
+                                            <!--td>
                                                 <span t-esc="line['move_name']"/>
-                                            </td>
+                                            </td-->
                                             <td>
                                                 <span t-esc="line['lname']"/>
                                             </td>
