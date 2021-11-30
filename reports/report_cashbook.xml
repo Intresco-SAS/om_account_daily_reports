@@ -158,6 +158,9 @@
                                                 <span t-esc="line['move_name']"/>
                                             </td-->
                                             <td>
+                                               
+                                            </td>
+                                            <td>
                                                 <span t-esc="line['lname']"/>
                                             </td>
                                             <!-- <td class="text-right">
