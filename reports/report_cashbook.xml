@@ -42,7 +42,7 @@
                 </div>
                 <br/>
 
-                <table class="table table-sm table-reports">
+                <table class="table table-sm table-striped">
                     <thead>
                         <tr>
                             <th>Date</th>
