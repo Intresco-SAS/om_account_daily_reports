@@ -42,18 +42,18 @@
                 </div>
                 <br/>
 
-                <table class="table table-sm table-striped">
+                <table class="table table-sm table-reports">
                     <thead>
-                        <tr>
-                            <th style="width:10%">Date</th>
+                        <tr class="text-center">
+                            <th>Date</th>
                             <th>JRNL</th>
                             <th>Partner</th>
-                            <th>Referencia</th>
-                            <th></th>
+                            <th>Ref</th>
+                            <th>Move</th>
                             <th>Entry Label</th>
                             <!-- <th>Debit</th> -->
                             <!-- <th>Credit</th> -->
-                            <th class="text-right">Balance</th>
+                            <th>Balance</th>
                             <th groups="base.group_multi_currency">Currency</th>
                         </tr>
                     </thead>
@@ -89,6 +89,46 @@
                                     </td> -->
                                     <td class="text-right">
                                         <span t-esc="init_balance_line['balance']"
+                                              t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td>
+                                    <td groups="base.group_multi_currency"/>
+                                </tr>
+                                <tr t-if="init_balance_line" style="font-weight: bold;">
+                                    <td colspan="5">
+                                    </td>
+                                    <td>
+                                        <span>Total Debits</span>
+                                    </td>
+                                    <!-- <td class="text-right">
+                                        <span t-esc="account['debit'] - init_balance_line['debit']"
+                                              t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td> -->
+                                    <!-- <td class="text-right">
+                                        <span t-esc="account['credit'] - init_balance_line['credit']"
+                                              t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td> -->
+                                    <td class="text-right">
+                                        <span t-esc="account['debit']"
+                                              t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td>
+                                    <td groups="base.group_multi_currency"/>
+                                </tr>
+                                <tr t-if="init_balance_line" style="font-weight: bold;">
+                                    <td colspan="5">
+                                    </td>
+                                    <td>
+                                        <span>Total Credits</span>
+                                    </td>
+                                    <!-- <td class="text-right">
+                                        <span t-esc="account['debit'] - init_balance_line['debit']"
+                                              t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td> -->
+                                    <!-- <td class="text-right">
+                                        <span t-esc="account['credit'] - init_balance_line['credit']"
+                                              t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td> -->
+                                    <td class="text-right">
+                                        <span t-esc="account['credit']"
                                               t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
@@ -154,11 +194,8 @@
                                                     <span t-if="line['lref']" t-esc="line['lref']"/>
                                                 </t>
                                             </td>
-                                            <!--td>
-                                                <span t-esc="line['move_name']"/>
-                                            </td-->
                                             <td>
-                                               
+                                                <span t-esc="line['move_name']"/>
                                             </td>
                                             <td>
                                                 <span t-esc="line['lname']"/>
