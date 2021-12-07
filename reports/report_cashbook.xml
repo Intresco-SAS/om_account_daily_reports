@@ -45,11 +45,11 @@
                 <table class="table table-sm table-reports">
                     <thead>
                         <tr class="text-center">
-                            <th>Date</th>
-                            <th>JRNL</th>
+                            <!--th>Date</th-->
+                            <!--th>JRNL</th-->
                             <th>Partner</th>
                             <th>Ref</th>
-                            <th>Move</th>
+                            <!--th>Move</th-->
                             <th>Entry Label</th>
                             <!-- <th>Debit</th> -->
                             <!-- <th>Credit</th> -->
@@ -78,7 +78,7 @@
                                     </td>
                                     <td>
                                         <!-- <span t-esc="account['lname']"/> -->
-                                        <span>Initial Balance</span>
+                                        <span>Saldo Inicial</span>
                                     </td>
                                     <td class="text-right">
                                         <span t-esc="account['initial_balance']"
@@ -90,7 +90,7 @@
                                     <td colspan="5">
                                     </td>
                                     <td>
-                                        <span>Total Debits</span>
+                                        <span>Subtotal Ingresos</span>
                                     </td>
                                     <td class="text-right">
                                         <span t-esc="account['debit']"
@@ -102,7 +102,7 @@
                                     <td colspan="5">
                                     </td>
                                     <td>
-                                        <span>Total Credits</span>
+                                        <span>Subtotal Egresos</span>
                                     </td>   
                                     <td class="text-right">
                                         <span t-esc="account['credit'] *-1"
@@ -114,7 +114,7 @@
                                     <td colspan="5">
                                     </td>
                                     <td>
-                                        <span>Actual</span>
+                                        <span>Subtotal</span>
                                     </td>
                                     <td class="text-right">
                                         <span t-esc="account['debit'] - account['credit']"
@@ -126,7 +126,7 @@
                                     <td colspan="5">
                                     </td>
                                     <td>
-                                        <span>Final Balance</span>
+                                        <span>Saldo Final</span>
                                     </td>
                                     <td class="text-right">
                                         <span t-esc="account['balance']"
@@ -138,12 +138,12 @@
                                 <t t-foreach="account['move_lines']" t-as="line">
                                     <t t-if="line['lname'] != 'Initial Balance'">
                                         <tr>
-                                            <td>
+                                            <!--td>
                                                 <span t-esc="line['ldate']"/>
-                                            </td>
-                                            <td>
+                                            </td-->
+                                            <!--td>
                                                 <span t-esc="line['lcode']"/>
-                                            </td>
+                                            </td-->
                                             <td>
                                                 <span t-esc="line['partner_name']"/>
                                             </td>
@@ -155,9 +155,9 @@
                                                     <span t-if="line['lref']" t-esc="line['lref']"/>
                                                 </t>
                                             </td>
-                                            <td>
+                                            <!--td>
                                                 <span t-esc="line['move_name']"/>
-                                            </td>
+                                            </td-->
                                             <td>
                                                 <span t-esc="line['lname']"/>
                                             </td>

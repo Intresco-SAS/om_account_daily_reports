@@ -35,7 +35,7 @@ class AccountCashBookReport(models.TransientModel):
         [('sort_date', 'Date'), ('sort_journal_partner', 'Journal & Partner')],
         string='Sort by',
         required=True, default='sort_date')
-    initial_balance = fields.Boolean(string='Include Initial Balances',
+    initial_balance = fields.Boolean(string='Include Initial Balances', default=True,
                                      help='If you selected date, this field allow you to add a row to display the amount of debit/credit/balance that precedes the filter you\'ve set.')
 
     @api.onchange('account_ids')
