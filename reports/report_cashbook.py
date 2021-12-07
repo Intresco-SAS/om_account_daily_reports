@@ -3,7 +3,9 @@
 import time
 from odoo import api, models, _
 from odoo.exceptions import UserError
+import logging
 
+_logger = logging.getLogger(__name__)
 
 class ReportCashBook(models.AbstractModel):
     _name = 'report.om_account_daily_reports.report_cashbook'
@@ -95,17 +97,21 @@ class ReportCashBook(models.AbstractModel):
             row['balance'] += balance
             move_lines[row.pop('account_id')].append(row)
 
+        _logger.info('\nmove_lines\n %r \n\n', move_lines)
         # Calculate the debit, credit and balance for Accounts
         account_res = []
         for account in accounts:
             currency = account.currency_id and account.currency_id or account.company_id.currency_id
-            res = dict((fn, 0.0) for fn in ['credit', 'debit', 'balance'])
+            res = dict((fn, 0.0) for fn in ['credit', 'debit', 'balance','initial_balance'])
             res['code'] = account.code
             res['name'] = account.name
             res['move_lines'] = move_lines[account.id]
             for line in res.get('move_lines'):
-                res['debit'] += line['debit']
-                res['credit'] += line['credit']
+                if line['lname'] != "Initial Balance":
+                    res['debit'] += line['debit']
+                    res['credit'] += line['credit']
+                else:
+                    res['initial_balance'] = line['balance']
                 res['balance'] = line['balance']
             if display_account == 'all':
                 account_res.append(res)
@@ -113,6 +119,7 @@ class ReportCashBook(models.AbstractModel):
                 account_res.append(res)
             if display_account == 'not_zero' and not currency.is_zero(res['balance']):
                 account_res.append(res)
+        _logger.info('\n\n %r \n\n', account_res)
         return account_res
 
     @api.model
