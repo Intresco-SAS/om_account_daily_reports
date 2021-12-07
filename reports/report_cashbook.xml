@@ -45,9 +45,9 @@
                 <table class="table table-sm table-reports">
                     <thead>
                         <tr class="text-center">
-                            <!--th></th-->
-                            <th></th>
                             <th>Partner</th>
+                            <th></th>
+                            <th></th>
                             <th>Ref</th>
                             <th></th>
                             <th>Entry Label</th>
@@ -138,9 +138,9 @@
                                 <t t-foreach="account['move_lines']" t-as="line">
                                     <t t-if="line['lname'] != 'Initial Balance'">
                                         <tr>
-                                            <!--td>
-                                                <span t-esc="line['ldate']"/>
-                                            </td-->
+                                            <td>
+                                                <!--span t-esc="line['ldate']"/-->
+                                            </td>
                                             <td>
                                                 <!--span t-esc="line['lcode']"/-->
                                             </td>
