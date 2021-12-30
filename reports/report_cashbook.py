@@ -89,20 +89,19 @@ class ReportCashBook(models.AbstractModel):
                         WHERE l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
         params = (tuple(accounts.ids),) + tuple(where_params)
         cr.execute(sql, params)
-
-        for row in cr.dictfetchall():
+        rows_acc = cr.dictfetchall()
+        for row in rows_acc:
             balance = 0
             for line in move_lines.get(row['account_id']):
                 balance += line['debit'] - line['credit']
             row['balance'] += balance
             move_lines[row.pop('account_id')].append(row)
 
-        _logger.info('\nmove_lines\n %r \n\n', move_lines)
         # Calculate the debit, credit and balance for Accounts
         account_res = []
         for account in accounts:
             currency = account.currency_id and account.currency_id or account.company_id.currency_id
-            res = dict((fn, 0.0) for fn in ['credit', 'debit', 'balance','initial_balance'])
+            res = dict((fn, 0.0) for fn in ['credit', 'debit', 'balance', 'initial_balance'])
             res['code'] = account.code
             res['name'] = account.name
             res['move_lines'] = move_lines[account.id]
@@ -111,15 +110,14 @@ class ReportCashBook(models.AbstractModel):
                     res['debit'] += line['debit']
                     res['credit'] += line['credit']
                 else:
-                    res['initial_balance'] = line['balance']
-                res['balance'] = line['balance']
+                    res['initial_balance'] += line['debit'] - line['credit'] # line['balance']
+                res['balance'] += line['debit'] - line['credit']
             if display_account == 'all':
                 account_res.append(res)
             if display_account == 'movement' and res.get('move_lines'):
                 account_res.append(res)
             if display_account == 'not_zero' and not currency.is_zero(res['balance']):
                 account_res.append(res)
-        _logger.info('\n\n %r \n\n', account_res)
         return account_res
 
     @api.model
