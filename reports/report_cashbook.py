@@ -54,8 +54,10 @@ class ReportCashBook(models.AbstractModel):
                     LEFT JOIN res_partner p ON (l.partner_id = p.id) 
                     JOIN account_journal j ON (l.journal_id = j.id) 
                     JOIN account_account acc ON (l.account_id = acc.id) 
-                    WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
-            params = (tuple(accounts.ids),) + tuple(init_where_params)
+                    WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
+            # WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
+            # params = (tuple(accounts.ids),) + tuple(init_where_params)
+            params = (tuple([self._context.get('create_user_id', 0)]),) + (tuple(accounts.ids),) + tuple(init_where_params)
             cr.execute(sql, params)
             for row in cr.dictfetchall():
                 move_lines[row.pop('account_id')].append(row)
@@ -86,8 +88,9 @@ class ReportCashBook(models.AbstractModel):
                         LEFT JOIN res_partner p ON (l.partner_id=p.id)\
                         JOIN account_journal j ON (l.journal_id=j.id)\
                         JOIN account_account acc ON (l.account_id = acc.id) \
-                        WHERE l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
-        params = (tuple(accounts.ids),) + tuple(where_params)
+                        WHERE m.create_uid IN %s AND l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
+        # params = (tuple(accounts.ids),) + tuple(where_params)
+        params = (tuple([self._context.get('create_user_id', 0)]),) + (tuple(accounts.ids),) + tuple(where_params)
         cr.execute(sql, params)
         rows_acc = cr.dictfetchall()
         for row in rows_acc:
