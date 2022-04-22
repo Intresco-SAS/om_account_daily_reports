@@ -2,6 +2,7 @@
 
 from odoo import fields, models, api, _
 from datetime import date
+from datetime import datetime
 
 
 class AccountCashBookReport(models.TransientModel):
@@ -17,8 +18,8 @@ class AccountCashBookReport(models.TransientModel):
             accounts.append(journal.payment_debit_account_id.id)
         return accounts
 
-    date_from = fields.Date(string='Start Date', default=date.today(), required=True)
-    date_to = fields.Date(string='End Date', default=date.today(), required=True)
+    date_from = fields.Datetime(string='Start Date', default=datetime.now(), required=True)
+    date_to = fields.Datetime(string='End Date', default=datetime.now(), required=True)
     target_move = fields.Selection([('posted', 'Posted Entries'),
                                     ('all', 'All Entries')], string='Target Moves', required=True,
                                    default='posted')

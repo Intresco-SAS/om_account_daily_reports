@@ -18,12 +18,14 @@
 
                     <div class="col-2">
                         <strong>Start Date:</strong>
-                        <p t-esc="data['date_from']"/>
+                        <p t-esc="request.env['account.move'].sudo().convert_datetime(data['date_from'])"/>
+                        <!-- <p t-esc="data['date_from']"/> -->
                     </div>
                     <div class="col-2">
 
                         <strong>End Date:</strong>
-                        <p t-esc="data['date_to']"/>
+                        <!-- <p t-esc="data['date_to']"/> -->
+                        <p t-esc="request.env['account.move'].sudo().convert_datetime(data['date_to'])"/>
                     </div>
                     <div class="col-2">
                         <div style="width:70%;">
@@ -81,7 +83,8 @@
                             </tr>
                             <tr t-foreach="account['move_lines']" t-as="line">
                                 <td>
-                                    <span t-esc="line['ldate']"/>
+                                    <!-- <span t-esc="line['ldate']"/> -->
+                                    <span t-esc="request.env['account.move'].sudo().convert_datetime(line['ldate'])"/>
                                 </td>
                                 <td>
                                     <span t-esc="line['lcode']"/>

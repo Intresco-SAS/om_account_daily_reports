@@ -24,6 +24,9 @@
                     <field name="pos_order_id" readonly='1'/>
                     <field name="pos_reference" readonly='1'/>
                 </xpath>
+                <xpath expr="//label[@for='invoice_payment_term_id']" position="before">
+                    <field name="date_with_time" attrs="{'invisible': [('move_type', '!=', 'entry')]}"/>
+                </xpath>
             </field>
         </record>
 

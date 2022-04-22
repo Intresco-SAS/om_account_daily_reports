@@ -33,7 +33,7 @@ class ReportBankBook(models.AbstractModel):
 
         # Prepare initial sql query and Get the initial move lines
         if init_balance:
-            init_tables, init_where_clause, init_where_params = MoveLine.with_context(date_from=self.env.context.get('date_from'), date_to=False,initial_bal=True)._query_get()
+            init_tables, init_where_clause, init_where_params = MoveLine.with_context(datetime_field=True,date_from=self.env.context.get('date_from'), date_to=False,initial_bal=True)._query_get()
             init_wheres = [""]
             if init_where_clause.strip():
                 init_wheres.append(init_where_clause.strip())
@@ -60,12 +60,12 @@ class ReportBankBook(models.AbstractModel):
             for row in cr.dictfetchall():
                 move_lines[row.pop('account_id')].append(row)
 
-        sql_sort = 'l.date, l.move_id'
+        sql_sort = 'l.date_with_time, l.move_id'
         if sortby == 'sort_journal_partner':
             sql_sort = 'j.code, p.name, l.move_id'
 
         # Prepare sql query base on selected parameters from wizard
-        tables, where_clause, where_params = MoveLine._query_get()
+        tables, where_clause, where_params = MoveLine.with_context(datetime_field=True)._query_get()
         wheres = [""]
         if where_clause.strip():
             wheres.append(where_clause.strip())
@@ -78,7 +78,7 @@ class ReportBankBook(models.AbstractModel):
                 accounts.append(journal.payment_credit_account_id.id)
             accounts = self.env['account.account'].search([('id', 'in', accounts)])
 
-        sql = ('''SELECT l.id AS lid, l.account_id AS account_id, l.date AS ldate, j.code AS lcode, l.currency_id, l.amount_currency, l.ref AS lref, l.name AS lname, COALESCE(l.debit,0) AS debit, 
+        sql = ('''SELECT l.id AS lid, l.account_id AS account_id, l.date_with_time AS ldate, j.code AS lcode, l.currency_id, l.amount_currency, l.ref AS lref, l.name AS lname, COALESCE(l.debit,0) AS debit, 
         COALESCE(l.credit,0) AS credit, COALESCE(SUM(l.debit),0) - COALESCE(SUM(l.credit), 0) AS balance,\
                         m.name AS move_name, c.symbol AS currency_code, p.name AS partner_name\
                         FROM account_move_line l\
@@ -87,7 +87,7 @@ class ReportBankBook(models.AbstractModel):
                         LEFT JOIN res_partner p ON (l.partner_id=p.id)\
                         JOIN account_journal j ON (l.journal_id=j.id)\
                         JOIN account_account acc ON (l.account_id = acc.id) \
-                        WHERE m.create_uid IN %s AND l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
+                        WHERE m.create_uid IN %s AND l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date_with_time, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
         # params = (tuple(accounts.ids),) + tuple(where_params)
         params = (tuple([self._context.get('create_user_id', 0)]),) + (tuple(accounts.ids),) + tuple(where_params)
         cr.execute(sql, params)
