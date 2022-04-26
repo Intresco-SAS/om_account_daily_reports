@@ -32,6 +32,23 @@ class AccountMove(models.Model):
             res.date_with_time = datetime.now()
         return res
 
+
+class AccountBankStatementLine(models.Model):
+    _inherit = 'account.bank.statement.line'
+
+    pos_order_id = fields.Many2one('pos.order', string='POS Order')
+    pos_reference = fields.Char(
+        string='POS Receipt Number', store=True, related='pos_order_id.pos_reference')
+
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    pos_order_id = fields.Many2one('pos.order', string='POS Order')
+    pos_reference = fields.Char(
+        string='POS Receipt Number', store=True, related='pos_order_id.pos_reference')
+    date_with_time = fields.Datetime(string='Accounting Date with hour', related='move_id.date_with_time', store=True, copy=False)
+
     @api.model
     def _query_get(self, domain=None):
         self.check_access_rights('read')
@@ -97,7 +114,6 @@ class AccountMove(models.Model):
         if domain:
             domain.append(('display_type', 'not in', ('line_section', 'line_note')))
             domain.append(('move_id.state', '!=', 'cancel'))
-
             query = self._where_calc(domain)
 
             # Wrap the query with 'company_id IN (...)' to avoid bypassing company access rights.
@@ -105,23 +121,6 @@ class AccountMove(models.Model):
 
             tables, where_clause, where_clause_params = query.get_sql()
         return tables, where_clause, where_clause_params
-
-
-class AccountBankStatementLine(models.Model):
-    _inherit = 'account.bank.statement.line'
-
-    pos_order_id = fields.Many2one('pos.order', string='POS Order')
-    pos_reference = fields.Char(
-        string='POS Receipt Number', store=True, related='pos_order_id.pos_reference')
-
-
-class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
-
-    pos_order_id = fields.Many2one('pos.order', string='POS Order')
-    pos_reference = fields.Char(
-        string='POS Receipt Number', store=True, related='pos_order_id.pos_reference')
-    date_with_time = fields.Datetime(string='Accounting Date with hour', related='move_id.date_with_time', store=True, copy=False)
 
 
 class PosSession(models.Model):
