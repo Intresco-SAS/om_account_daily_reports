@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 14.0-20210803\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-28 01:13+0000\n"
-"PO-Revision-Date: 2021-08-27 20:23-0500\n"
+"PO-Revision-Date: 2022-06-08 11:10-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es_CO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: es_CO\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
@@ -54,12 +54,12 @@ msgstr "<strong>Target Moves:</strong>"
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_bankbook
 msgid "Account Bank Book"
-msgstr "Libro bancario de la cuenta"
+msgstr "Diario bancario de la cuenta"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_cashbook
 msgid "Account Cash Book"
-msgstr "Libro Efectivo de la cuenta"
+msgstr "Diario Efectivo de la cuenta"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.report_daybook
@@ -102,12 +102,12 @@ msgstr "Balance"
 #: model:ir.model,name:om_account_daily_reports.model_report_om_account_daily_reports_report_bankbook
 #: model:ir.ui.menu,name:om_account_daily_reports.menu_bankbook
 msgid "Bank Book"
-msgstr "Libro Bancario"
+msgstr "Reporte de Banco"
 
 #. module: om_account_daily_reports
 #: model:ir.model,name:om_account_daily_reports.model_account_bankbook_report
 msgid "Bank Book Report"
-msgstr "Informe Libro Bancario"
+msgstr "Informe Diario Bancario"
 
 #. module: om_account_daily_reports
 #: model_terms:ir.ui.view,arch_db:om_account_daily_reports.account_report_bankbook_view
@@ -122,12 +122,12 @@ msgstr "Cancelar"
 #: model:ir.model,name:om_account_daily_reports.model_report_om_account_daily_reports_report_cashbook
 #: model:ir.ui.menu,name:om_account_daily_reports.menu_cashbook
 msgid "Cash Book"
-msgstr "Libro de Efectivo"
+msgstr "Reporte de Efectivo"
 
 #. module: om_account_daily_reports
 #: model:ir.model,name:om_account_daily_reports.model_account_cashbook_report
 msgid "Cash Book Report"
-msgstr "Informe Libro de Efectivo"
+msgstr "Informe Diario de Efectivo"
 
 #. module: om_account_daily_reports
 #: model:ir.model.fields,field_description:om_account_daily_reports.field_account_bankbook_report__create_uid
@@ -177,7 +177,7 @@ msgstr "Fecha"
 #: model:ir.model,name:om_account_daily_reports.model_report_om_account_daily_reports_report_daybook
 #: model:ir.ui.menu,name:om_account_daily_reports.menu_daybook
 msgid "Day Book"
-msgstr "Libro Diario"
+msgstr "Reporte Diario"
 
 #. module: om_account_daily_reports
 #: model:ir.model,name:om_account_daily_reports.model_account_daybook_report
