@@ -72,14 +72,14 @@
                             </t> -->
 
                             <t t-if="init_balance">
-                                <tr style="font-weight: bold;">
+                                <!--tr style="font-weight: bold;">
                                     <td colspan="5">
                                         <span style="color: white;" t-esc="'..'"/>
                                         <span t-esc="account['code']"/>
                                         <span t-esc="account['name']"/>
                                     </td>
                                     <td>
-                                        <!-- <span t-esc="account['lname']"/> -->
+                                        <span t-esc="account['lname']"/>
                                         <span>Initial Balance</span>
                                     </td>
                                     <td class="text-right">
@@ -87,7 +87,7 @@
                                               t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
-                                </tr>
+                                </tr-->
                                 <tr style="font-weight: bold;">
                                     <td colspan="5">
                                     </td>
@@ -124,7 +124,7 @@
                                     </td>
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
-                                <tr style="font-weight: bold;">
+                                <!--tr style="font-weight: bold;">
                                     <td colspan="5">
                                     </td>
                                     <td>
@@ -135,7 +135,7 @@
                                               t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
-                                </tr>
+                                </tr-->
 
                                 <t t-foreach="account['move_lines']" t-as="line">
                                     <t t-if="line['lname'] != 'Initial Balance'">
