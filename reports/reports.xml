@@ -26,5 +26,13 @@
             <field name="report_file">om_account_daily_reports.report_bankbook</field>
         </record>
 
+        <record id="action_report_sale_book" model="ir.actions.report">
+            <field name="name">Sale Book</field>
+            <field name="model">account.salebook.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">om_account_daily_reports.report_salebook</field>
+            <field name="report_file">om_account_daily_reports.report_salebook</field>
+        </record>
+
     </data>
 </odoo>
