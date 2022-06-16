@@ -74,7 +74,7 @@ class ReportSaleBook(models.AbstractModel):
         filters = " AND ".join(wheres)
         filters = filters.replace('account_move_line__move_id', 'm').replace('account_move_line', 'l')
         if not accounts:
-            journals = self.env['account.journal'].search([('type', '!=', 'sale')])
+            journals = self.env['account.journal'].search([('type', '=', 'sale')])
             accounts = []
             for journal in journals:
                 accounts.append(journal.payment_credit_account_id.id)
@@ -141,7 +141,7 @@ class ReportSaleBook(models.AbstractModel):
         account_ids = data['form']['account_ids']
         accounts = self.env['account.account'].search([('id', 'in', account_ids)])
         if not accounts:
-            journals = self.env['account.journal'].search([('type', '!=', 'sale')])
+            journals = self.env['account.journal'].search([('type', '=', 'sale')])
             accounts = []
             for journal in journals:
                 accounts.append(journal.payment_credit_account_id.id)

@@ -10,7 +10,7 @@ class AccountSaleBookReport(models.TransientModel):
     _description = "Sale Book Report"
 
     def _get_default_account_ids(self):
-        journals = self.env['account.journal'].search([('type', '!=', 'sale')])
+        journals = self.env['account.journal'].search([('type', '=', 'sale')])
         accounts = []
         for journal in journals:
             accounts.append(journal.default_account_id.id)
@@ -44,7 +44,7 @@ class AccountSaleBookReport(models.TransientModel):
     def onchange_account_ids(self):
         if self.account_ids:
             journals = self.env['account.journal'].search(
-                [('type', '!=', 'sale')])
+                [('type', '=', 'sale')])
             accounts = []
             for journal in journals:
                 accounts.append(journal.payment_credit_account_id.id)
