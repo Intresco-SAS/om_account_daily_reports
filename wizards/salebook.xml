@@ -16,8 +16,8 @@
                     </group>
                 </group>
                 <group>
-                    <field name="initial_balance"/>
-                    <field name="create_user_id" force_save='1' readonly='0'/>
+                    <!--field name="initial_balance"/>
+                    <field name="create_user_id" force_save='1' readonly='0'/-->
                 </group>
                 <group col="4">
                     <field name="date_from"/>

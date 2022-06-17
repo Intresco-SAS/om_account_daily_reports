@@ -28,8 +28,9 @@ class AccountMove(models.Model):
     @api.model
     def create(self, vals):
         res = super(AccountMove, self).create(vals)
-        if res.move_type == 'entry' and not res.date_with_time:
-            res.date_with_time = datetime.now()
+        if res.move_type == 'entry' or res.move_type == 'out_invoice':
+            if not res.date_with_time:
+                res.date_with_time = datetime.now()
         return res
 
 
