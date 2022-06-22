@@ -12,11 +12,14 @@ class AccountSaleBookReport(models.TransientModel):
     def _get_default_account_ids(self):
         journals = self.env['account.journal'].search([('type', '=', 'sale')])
         accounts_sale = self.env['account.account'].search([('user_type_id', '=', 'Income'),('deprecated', '=', False)])
+        cash_journal = self.env['account.journal'].search([('type', '=', 'cash')])
         accounts = []
         for journal in journals:
             accounts.append(journal.default_account_id.id)
         for acc in accounts_sale:
             accounts.append(acc.id)
+        for cash in cash_journal:
+            accounts.append(cash.default_account_id.id)
         return accounts
 
     date_from = fields.Datetime(string='Start Date', default=datetime.now(), required=True)
@@ -46,12 +49,15 @@ class AccountSaleBookReport(models.TransientModel):
     def onchange_account_ids(self):
         if self.account_ids:
             journals = self.env['account.journal'].search([('type', '=', 'sale')])
+            cash_journal = self.env['account.journal'].search([('type', '=', 'cash')])
             accounts_sale = self.env['account.account'].search([('user_type_id', '=', 'Income'),('deprecated', '=', False)])
             accounts = []
             for journal in journals:
                 accounts.append(journal.payment_credit_account_id.id)
             for acc in accounts_sale:
-                accounts.append(acc.id)    
+                accounts.append(acc.id) 
+            for cash in cash_journal:
+                accounts.append(cash.default_account_id.id)
             domain = {'account_ids': [('id', 'in', accounts)]}
             return {'domain': domain}
 
