@@ -11,23 +11,23 @@
                     <h2>Account Cash Book</h2>
                 </div>
                 <div class="row mt32">
-                    <div class="col-4">
+                    <!--div class="col-4">
                         <strong>Journals:</strong>
                         <p t-esc="', '.join([ lt or '' for lt in print_journal ])"/>
-                    </div>
+                    </div-->
 
                     <div class="col-2">
                         <strong>Start Date:</strong>
                         <!-- <p t-esc="data['date_from']"/> -->
-                        <p t-esc="request.env['account.move'].sudo().convert_datetime(data['date_from'])"/>
+                        <span t-esc="request.env['account.move'].sudo().convert_datetime(data['date_from'])"/>
                     </div>
                     <div class="col-2">
 
                         <strong>End Date:</strong>
                         <!-- <p t-esc="data['date_to']"/> -->
-                        <p t-esc="request.env['account.move'].sudo().convert_datetime(data['date_to'])"/>
+                        <span t-esc="request.env['account.move'].sudo().convert_datetime(data['date_to'])"/>
                     </div>
-                    <div class="col-2">
+                    <!--div class="col-2">
                         <div style="width:70%;">
                             <strong>Sorted By:</strong>
                             <p t-if="data['sortby'] == 'sort_date'">Date</p>
@@ -40,7 +40,7 @@
                         <strong>Target Moves:</strong>
                         <p t-if="data['target_move'] == 'all'">All Entries</p>
                         <p t-if="data['target_move'] == 'posted'">Posted Entries</p>
-                    </div>
+                    </div-->
                 </div>
                 <br/>
 
@@ -48,9 +48,9 @@
                     <thead>
                         <tr class="text-center">
                             <th>Date</th>
-                            <th>JRNL</th>
+                            <!--th>JRNL</th-->
                             <th>Partner</th>
-                            <th>Ref</th>
+                            <!--th>Ref</th-->
                             <th>Move</th>
                             <th>Entry Label</th>
                             <!-- <th>Debit</th> -->
@@ -73,7 +73,7 @@
 
                             <t t-if="init_balance">
                                 <tr style="font-weight: bold;">
-                                    <td colspan="5">
+                                    <td colspan="3">
                                         <span style="color: white;" t-esc="'..'"/>
                                         <span t-esc="account['code']"/>
                                         <span t-esc="account['name']"/>
@@ -89,7 +89,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="5">
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <span>Total Debitos</span>
@@ -101,7 +101,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="5">
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <span>Total Creditos</span>
@@ -113,7 +113,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="5">
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <span>Actual</span>
@@ -125,7 +125,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="5">
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <span>Balance Final</span>
@@ -144,20 +144,20 @@
                                                 <!-- <span t-esc="line['ldate']"/> -->
                                                 <span t-esc="request.env['account.move'].sudo().convert_datetime(line['ldate'])"/>
                                             </td>
-                                            <td>
+                                            <!--td>
                                                 <span t-esc="line['lcode']"/>
-                                            </td>
+                                            </td-->
                                             <td>
                                                 <span t-esc="line['partner_name']"/>
                                             </td>
-                                            <td>
+                                            <!--td>
                                                 <t t-if="'pos_reference' in line">
                                                     <span t-esc="line['pos_reference']"/>
                                                 </t>
                                                 <t t-else="">
                                                     <span t-if="line['lref']" t-esc="line['lref']"/>
                                                 </t>
-                                            </td>
+                                            </td-->
                                             <td>
                                                 <span t-esc="line['move_name']"/>
                                             </td>
@@ -195,7 +195,7 @@
                             </t>
                             <t t-else="">
                                 <tr style="font-weight: bold;">
-                                    <td colspan="6">
+                                    <td colspan="4">
                                         <span style="color: white;" t-esc="'..'"/>
                                         <span t-esc="account['code']"/>
                                         <span t-esc="account['name']"/>
@@ -219,20 +219,20 @@
                                         <!-- <span t-esc="line['ldate']"/> -->
                                         <span t-esc="request.env['account.move'].sudo().convert_datetime(line['ldate'])"/>
                                     </td>
-                                    <td>
+                                    <!--td>
                                         <span t-esc="line['lcode']"/>
-                                    </td>
+                                    </td-->
                                     <td>
                                         <span t-esc="line['partner_name']"/>
                                     </td>
-                                    <td>
+                                    <!--td>
                                         <t t-if="'pos_reference' in line">
                                             <span t-esc="line['pos_reference']"/>
                                         </t>
                                         <t t-else="">
                                             <span t-if="line['lref']" t-esc="line['lref']"/>
                                         </t>
-                                    </td>
+                                    </td-->
                                     <td>
                                         <span t-esc="line['move_name']"/>
                                     </td>

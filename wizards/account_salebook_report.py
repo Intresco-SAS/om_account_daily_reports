@@ -11,11 +11,12 @@ class AccountSaleBookReport(models.TransientModel):
 
     def _get_default_account_ids(self):
         journals = self.env['account.journal'].search([('type', '=', 'sale')])
+        accounts_sale = self.env['account.account'].search([('user_type_id', '=', 'Income'),('deprecated', '=', False)])
         accounts = []
         for journal in journals:
             accounts.append(journal.default_account_id.id)
-            accounts.append(journal.payment_credit_account_id.id)
-            accounts.append(journal.payment_debit_account_id.id)
+        for acc in accounts_sale:
+            accounts.append(acc.id)
         return accounts
 
     date_from = fields.Datetime(string='Start Date', default=datetime.now(), required=True)
@@ -36,18 +37,21 @@ class AccountSaleBookReport(models.TransientModel):
         [('sort_date', 'Date'), ('sort_journal_partner', 'Journal & Partner')],
         string='Sort by',
         required=True, default='sort_date')
-    initial_balance = fields.Boolean(string='Include Initial Balances', default=True,
+    initial_balance = fields.Boolean(string='Include Initial Balances',
                                      help='If you selected date, this field allow you to add a row to display the amount of debit/credit/balance that precedes the filter you\'ve set.')
     create_user_id = fields.Many2one('res.users', string='Created By', default=lambda self: self.env.user)
+    create_user_id_m2m = fields.Many2many('res.users', string='Created By', default=lambda self: self.env.user)
 
     @api.onchange('account_ids')
     def onchange_account_ids(self):
         if self.account_ids:
-            journals = self.env['account.journal'].search(
-                [('type', '=', 'sale')])
+            journals = self.env['account.journal'].search([('type', '=', 'sale')])
+            accounts_sale = self.env['account.account'].search([('user_type_id', '=', 'Income'),('deprecated', '=', False)])
             accounts = []
             for journal in journals:
                 accounts.append(journal.payment_credit_account_id.id)
+            for acc in accounts_sale:
+                accounts.append(acc.id)    
             domain = {'account_ids': [('id', 'in', accounts)]}
             return {'domain': domain}
 

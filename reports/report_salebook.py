@@ -54,10 +54,11 @@ class ReportSaleBook(models.AbstractModel):
                     LEFT JOIN res_partner p ON (l.partner_id = p.id) 
                     JOIN account_journal j ON (l.journal_id = j.id) 
                     JOIN account_account acc ON (l.account_id = acc.id) 
-                    WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
-            # WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
-            # params = (tuple(accounts.ids),) + tuple(init_where_params)
-            params = (tuple([self._context.get('create_user_id', 0)]),) + (tuple(accounts.ids),) + tuple(init_where_params)
+                    WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
+             
+            params = (tuple(accounts.ids),) + tuple(init_where_params)
+            #WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference'
+            #params = (tuple([self._context.get('create_user_id')]),) + (tuple(accounts.ids),) + tuple(init_where_params)
             cr.execute(sql, params)
             for row in cr.dictfetchall():
                 move_lines[row.pop('account_id')].append(row)
@@ -76,8 +77,8 @@ class ReportSaleBook(models.AbstractModel):
         if not accounts:
             journals = self.env['account.journal'].search([('type', '=', 'sale')])
             accounts = []
-            for journal in journals:
-                accounts.append(journal.payment_credit_account_id.id)
+            #for journal in journals:
+            #    accounts.append(journal.payment_credit_account_id.id)
             accounts = self.env['account.account'].search([('id', 'in', accounts)])
 
         sql = ('''SELECT l.id AS lid, l.account_id AS account_id, l.date_with_time AS ldate, j.code AS lcode, l.currency_id, l.amount_currency, l.ref AS lref, l.name AS lname, l.pos_reference AS pos_reference, COALESCE(l.debit,0) AS debit, COALESCE(l.credit,0) AS credit, COALESCE(SUM(l.debit),0) - COALESCE(SUM(l.credit), 0) AS balance,\
@@ -88,9 +89,11 @@ class ReportSaleBook(models.AbstractModel):
                         LEFT JOIN res_partner p ON (l.partner_id=p.id)\
                         JOIN account_journal j ON (l.journal_id=j.id)\
                         JOIN account_account acc ON (l.account_id = acc.id) \
-                        WHERE m.create_uid IN %s AND l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date_with_time, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
-        # params = (tuple(accounts.ids),) + tuple(where_params)
-        params = (tuple([self._context.get('create_user_id', 0)]),) + (tuple(accounts.ids),) + tuple(where_params)
+                        WHERE l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
+                        
+        params = (tuple(accounts.ids),) + tuple(where_params)
+        #WHERE m.create_uid IN %s AND l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date_with_time, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
+        #params = (tuple([self._context.get('create_user_id')]),) + (tuple(accounts.ids),) + tuple(where_params)
         cr.execute(sql, params)
         rows_acc = cr.dictfetchall()
         for row in rows_acc:
@@ -143,8 +146,8 @@ class ReportSaleBook(models.AbstractModel):
         if not accounts:
             journals = self.env['account.journal'].search([('type', '=', 'sale')])
             accounts = []
-            for journal in journals:
-                accounts.append(journal.payment_credit_account_id.id)
+            #for journal in journals:
+            #    accounts.append(journal.payment_credit_account_id.id)
             accounts = self.env['account.account'].search([('id', 'in', accounts)])
         record = self.with_context(data['form'].get('comparison_context', {}))._get_account_move_entry(accounts, init_balance, sortby, display_account)
         return {
