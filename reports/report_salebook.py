@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 
 class ReportSaleBook(models.AbstractModel):
     _name = 'report.om_account_daily_reports.report_salebook'
-    _description = 'sale Book'
+    _description = 'Sale Book'
 
     def _get_account_move_entry(self, accounts, init_balance, sortby, display_account):
         """
@@ -55,7 +55,7 @@ class ReportSaleBook(models.AbstractModel):
                     JOIN account_journal j ON (l.journal_id = j.id) 
                     JOIN account_account acc ON (l.account_id = acc.id) 
                     WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
-             
+                    
             params = (tuple(accounts.ids),) + tuple(init_where_params)
             #WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference'
             #params = (tuple([self._context.get('create_user_id')]),) + (tuple(accounts.ids),) + tuple(init_where_params)
