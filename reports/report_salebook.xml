@@ -52,6 +52,7 @@
                             <th>Partner</th>
                            
                             <th>Move</th>
+                            <th>Room Ref</th>
                             <th>Entry Label</th>
                             <!-- <th>Debit</th> -->
                             <!-- <th>Credit</th> -->
@@ -73,7 +74,7 @@
 
                             <t t-if="init_balance">
                                 <tr style="font-weight: bold;">
-                                    <td colspan="3">
+                                    <td colspan="4">
                                         <span style="color: white;" t-esc="'..'"/>
                                         <span t-esc="account['code']"/>
                                         <span t-esc="account['name']"/>
@@ -89,7 +90,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="3">
+                                    <td colspan="4">
                                     </td>
                                     <td>
                                         <span>Total Debitos</span>
@@ -101,7 +102,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="3">
+                                    <td colspan="4">
                                     </td>
                                     <td>
                                         <span>Total Creditos</span>
@@ -113,7 +114,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="3">
+                                    <td colspan="4">
                                     </td>
                                     <td>
                                         <span>Actual</span>
@@ -125,7 +126,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="3">
+                                    <td colspan="4">
                                     </td>
                                     <td>
                                         <span>Balance Final</span>
@@ -149,6 +150,9 @@
                                             </td>
                                             <td>
                                                 <span t-esc="line['move_name']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="line['room_ref']"/>
                                             </td>
                                             <td>
                                                 <span t-esc="line['lname']"/>
@@ -184,7 +188,7 @@
                             </t>
                             <t t-else="">
                                 <tr style="font-weight: bold;">
-                                    <td colspan="4">
+                                    <td colspan="5">
                                         <span style="color: white;" t-esc="'..'"/>
                                         <span t-esc="account['code']"/>
                                         <span t-esc="account['name']"/>
@@ -215,6 +219,9 @@
                                    
                                     <td>
                                         <span t-esc="line['move_name']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['room_ref']"/>
                                     </td>
                                     <td>
                                         <span t-esc="line['lname']"/>

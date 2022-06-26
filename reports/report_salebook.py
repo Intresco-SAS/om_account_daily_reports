@@ -44,7 +44,7 @@ class ReportSaleBook(models.AbstractModel):
             sql = ("""
                     SELECT 0 AS lid, 
                     l.account_id AS account_id, '' AS ldate, '' AS lcode, 
-                    0.0 AS amount_currency,'' AS lref,'Initial Balance' AS lname, l.pos_reference as pos_reference, 
+                    0.0 AS amount_currency,'' AS lref,'Initial Balance' AS lname, l.pos_reference as pos_reference, l.room_ref as room_ref, 
                     COALESCE(SUM(l.credit),0.0) AS credit,COALESCE(SUM(l.debit),0.0) AS debit,COALESCE(SUM(l.debit),0) - COALESCE(SUM(l.credit),0) as balance, 
                     '' AS lpartner_id,'' AS move_name, '' AS currency_code,NULL AS currency_id,'' AS partner_name,
                     '' AS mmove_id, '' AS invoice_id, '' AS invoice_type,'' AS invoice_number
@@ -54,7 +54,7 @@ class ReportSaleBook(models.AbstractModel):
                     LEFT JOIN res_partner p ON (l.partner_id = p.id) 
                     JOIN account_journal j ON (l.journal_id = j.id) 
                     JOIN account_account acc ON (l.account_id = acc.id) 
-                    WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
+                    WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference', 'l.room_ref')
                     
             params = (tuple(accounts.ids),) + tuple(init_where_params)
             #WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference'
@@ -81,7 +81,7 @@ class ReportSaleBook(models.AbstractModel):
             #    accounts.append(journal.payment_credit_account_id.id)
             accounts = self.env['account.account'].search([('id', 'in', accounts)])
 
-        sql = ('''SELECT l.id AS lid, l.account_id AS account_id, l.date_with_time AS ldate, j.code AS lcode, l.currency_id, l.amount_currency, l.ref AS lref, l.name AS lname, l.pos_reference AS pos_reference, COALESCE(l.debit,0) AS debit, COALESCE(l.credit,0) AS credit, COALESCE(SUM(l.debit),0) - COALESCE(SUM(l.credit), 0) AS balance,\
+        sql = ('''SELECT l.id AS lid, l.account_id AS account_id, l.date_with_time AS ldate, j.code AS lcode, l.currency_id, l.amount_currency, l.ref AS lref, l.name AS lname, l.pos_reference AS pos_reference, l.room_ref AS room_ref, COALESCE(l.debit,0) AS debit, COALESCE(l.credit,0) AS credit, COALESCE(SUM(l.debit),0) - COALESCE(SUM(l.credit), 0) AS balance,\
                         m.name AS move_name, c.symbol AS currency_code, p.name AS partner_name\
                         FROM account_move_line l\
                         JOIN account_move m ON (l.move_id=m.id)\
@@ -89,7 +89,7 @@ class ReportSaleBook(models.AbstractModel):
                         LEFT JOIN res_partner p ON (l.partner_id=p.id)\
                         JOIN account_journal j ON (l.journal_id=j.id)\
                         JOIN account_account acc ON (l.account_id = acc.id) \
-                        WHERE l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
+                        WHERE l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, l.room_ref, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
                         
         params = (tuple(accounts.ids),) + tuple(where_params)
         #WHERE m.create_uid IN %s AND l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date_with_time, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
