@@ -44,7 +44,7 @@
                 </div>
                 <br/>
 
-                <table class="table table-sm table-reports">
+                <table class="table table-sm table-striped">
                     <thead>
                         <tr class="text-center">
                             <th>Date</th>
@@ -52,8 +52,8 @@
                             <th>Partner</th>
                            
                             <th>Move</th>
-                            <th>Room Ref</th>
-                            <th>Entry Label</th>
+                            <th>Referencia</th>
+                            <!--th>Entry Label</th-->
                             <!-- <th>Debit</th> -->
                             <!-- <th>Credit</th> -->
                             <th>Balance</th>
@@ -61,6 +61,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <t t-set="total_accounts" t-value="0"/>
                         <t t-foreach="Accounts" t-as="account">
                             <!-- <t t-set="init_balance_flag" t-value="'0'"/>
                             <t t-set="init_balance_line" t-value="'0'"/>
@@ -74,7 +75,7 @@
 
                             <t t-if="init_balance">
                                 <tr style="font-weight: bold;">
-                                    <td colspan="4">
+                                    <td colspan="3">
                                         <span style="color: white;" t-esc="'..'"/>
                                         <span t-esc="account['code']"/>
                                         <span t-esc="account['name']"/>
@@ -90,7 +91,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="4">
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <span>Total Debitos</span>
@@ -102,7 +103,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="4">
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <span>Total Creditos</span>
@@ -114,7 +115,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="4">
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <span>Actual</span>
@@ -126,7 +127,7 @@
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                                 <tr style="font-weight: bold;">
-                                    <td colspan="4">
+                                    <td colspan="3">
                                     </td>
                                     <td>
                                         <span>Balance Final</span>
@@ -137,7 +138,7 @@
                                     </td>
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
-
+                                
                                 <t t-foreach="account['move_lines']" t-as="line">
                                     <t t-if="line['lname'] != 'Initial Balance'">
                                         <tr>
@@ -151,12 +152,19 @@
                                             <td>
                                                 <span t-esc="line['move_name']"/>
                                             </td>
-                                            <td>
-                                                <span t-esc="line['room_ref']"/>
-                                            </td>
-                                            <td>
+                                            <t t-if="line['room_ref']">
+                                                <td>
+                                                    <span t-esc="line['room_ref']"/>
+                                                </td>
+                                            </t>
+                                            <t t-else="">
+                                                <td>
+                                                    <span t-esc="line['lname']"/>
+                                                </td>
+                                            </t>
+                                            <!--td>
                                                 <span t-esc="line['lname']"/>
-                                            </td>
+                                            </td-->
                                             <!-- <td class="text-right">
                                                 <span t-esc="line['debit']"
                                                       t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
@@ -187,11 +195,12 @@
                                 </t>
                             </t>
                             <t t-else="">
-                                <tr style="font-weight: bold;">
-                                    <td colspan="5">
+                                
+                                <tr style="font-weight: bold; font-size:20px">
+                                    <td colspan="4">
                                         <span style="color: white;" t-esc="'..'"/>
-                                        <span t-esc="account['code']"/>
-                                        <span t-esc="account['name']"/>
+                                        <!--span t-esc="account['code']"/-->
+                                        <span style="text-transform: uppercase" t-esc="account['name']"/>
                                     </td>
                                     <!-- <td class="text-right">
                                         <span t-esc="account['debit']"
@@ -206,6 +215,8 @@
                                               t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
+                                    
+                                    
                                 </tr>
                                 <tr t-foreach="account['move_lines']" t-as="line">
                                     <td>
@@ -220,12 +231,19 @@
                                     <td>
                                         <span t-esc="line['move_name']"/>
                                     </td>
-                                    <td>
-                                        <span t-esc="line['room_ref']"/>
-                                    </td>
-                                    <td>
+                                    <t t-if="line['room_ref']">
+                                        <td>
+                                            <span t-esc="line['room_ref']"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td>
+                                            <span t-esc="line['lname']"/>
+                                        </td>
+                                    </t>
+                                    <!--td>
                                         <span t-esc="line['lname']"/>
-                                    </td>
+                                    </td-->
                                     <!-- <td class="text-right">
                                         <span t-esc="line['debit']"
                                               t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
@@ -251,13 +269,26 @@
                                         <span t-esc="line['amount_currency'] if line['amount_currency'] > 0.00 else ''"/>
                                         <span t-esc="line['currency_code'] if line['amount_currency'] > 0.00 else ''"/>
                                     </td>
+                                                                        
                                 </tr>
+                                                           
                             </t>
-
-                            
+                            <t t-set="total_accounts" t-value="total_accounts+account['balance']"/>
                         </t>
+                        <tr style="font-weight: bold; color:#B3151B; font-size:22px">
+                            <td colspan="4">
+                                <span style="color: white;" t-esc="'..'"/>
+                                <!--span t-esc="account['code']"/-->
+                                <span style="text-transform: uppercase">BALANCE FINAL</span>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="total_accounts"
+                                t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                            </td>    
+                        </tr>
+                        
                     </tbody>
-
+                    
                 </table>
 
             </t>

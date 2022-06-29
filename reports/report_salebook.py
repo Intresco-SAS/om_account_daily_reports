@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from multiprocessing import context
 import time
 from odoo import api, models, _
 from odoo.exceptions import UserError
@@ -12,6 +13,8 @@ class ReportSaleBook(models.AbstractModel):
     _description = 'Sale Book'
 
     def _get_account_move_entry(self, accounts, init_balance, sortby, display_account):
+        _logger.info("a"*200)
+       # _logger.info(self.with_context(data))
         """
                :param:
                        accounts: the recordset of accounts
@@ -150,6 +153,13 @@ class ReportSaleBook(models.AbstractModel):
             #    accounts.append(journal.payment_credit_account_id.id)
             accounts = self.env['account.account'].search([('id', 'in', accounts)])
         record = self.with_context(data['form'].get('comparison_context', {}))._get_account_move_entry(accounts, init_balance, sortby, display_account)
+        _logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+       
+        if data['form']['comparison_context']['create_user_id']:
+            print()
+        #_logger.info(self.with_context(data['form'].get('comparison_context', {})))
+        _logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
         return {
             'doc_ids': docids,
             'doc_model': model,
