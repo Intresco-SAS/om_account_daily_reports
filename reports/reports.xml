@@ -34,5 +34,13 @@
             <field name="report_file">om_account_daily_reports.report_salebook</field>
         </record>
 
+        <record id="action_report_close_book" model="ir.actions.report">
+            <field name="name">Close Book</field>
+            <field name="model">account.closebook.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">om_account_daily_reports.report_closebook</field>
+            <field name="report_file">om_account_daily_reports.report_closebook</field>
+        </record>
+
     </data>
 </odoo>

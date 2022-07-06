@@ -89,7 +89,7 @@ class AccountCloseBookReport(models.TransientModel):
         comparison_context = self._build_comparison_context(data)
         data['form']['comparison_context'] = comparison_context
         return self.env.ref(
-            'om_account_daily_reports.action_report_sale_book').report_action(self,
+            'om_account_daily_reports.action_report_close_book').report_action(self,
                                                                      data=data)
 
     def build_where_clause(self):
