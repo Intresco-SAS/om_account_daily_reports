@@ -57,7 +57,7 @@ class ReportCloseBook(models.AbstractModel):
                     LEFT JOIN res_partner p ON (l.partner_id = p.id) 
                     JOIN account_journal j ON (l.journal_id = j.id) 
                     JOIN account_account acc ON (l.account_id = acc.id) 
-                    WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference'
+                    WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
                     
             params = (tuple([self._context.get('create_user_id')]),) + (tuple(accounts.ids),) + tuple(init_where_params)
             
