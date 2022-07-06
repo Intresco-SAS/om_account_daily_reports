@@ -57,11 +57,12 @@ class ReportCloseBook(models.AbstractModel):
                     LEFT JOIN res_partner p ON (l.partner_id = p.id) 
                     JOIN account_journal j ON (l.journal_id = j.id) 
                     JOIN account_account acc ON (l.account_id = acc.id) 
-                    WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference', 'l.room_ref')
+                    WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference'
                     
-            params = (tuple(accounts.ids),) + tuple(init_where_params)
+            params = (tuple([self._context.get('create_user_id')]),) + (tuple(accounts.ids),) + tuple(init_where_params)
+            
             #WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference'
-            #params = (tuple([self._context.get('create_user_id')]),) + (tuple(accounts.ids),) + tuple(init_where_params)
+            #params = (tuple(accounts.ids),) + tuple(init_where_params)
             cr.execute(sql, params)
             for row in cr.dictfetchall():
                 move_lines[row.pop('account_id')].append(row)
