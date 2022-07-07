@@ -52,7 +52,7 @@
                             <th>Partner</th>
                             <!--th>Ref</th-->
                             <th>Move</th>
-                            <th>Referencia</th>
+                            <th>Entry Label</th>
                             <!-- <th>Debit</th> -->
                             <!-- <th>Credit</th> -->
                             <th>Balance</th>
@@ -161,16 +161,9 @@
                                             <td>
                                                 <span t-esc="line['move_name']"/>
                                             </td>
-                                            <t t-if="line['room_ref']">
-                                                <td>
-                                                    <span t-esc="line['room_ref']"/>
-                                                </td>
-                                            </t>
-                                            <t t-else="">
-                                                <td>
-                                                    <span t-esc="line['lname']"/>
-                                                </td>
-                                            </t>
+                                            <td>
+                                                <span t-esc="line['lname']"/>
+                                            </td>
                                             <!-- <td class="text-right">
                                                 <span t-esc="line['debit']"
                                                       t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
@@ -243,16 +236,9 @@
                                     <td>
                                         <span t-esc="line['move_name']"/>
                                     </td>
-                                    <t t-if="line['room_ref']">
-                                        <td>
-                                            <span t-esc="line['room_ref']"/>
-                                        </td>
-                                    </t>
-                                    <t t-else="">
-                                        <td>
-                                            <span t-esc="line['lname']"/>
-                                        </td>
-                                    </t>
+                                    <td>
+                                        <span t-esc="line['lname']"/>
+                                    </td>
                                     <!-- <td class="text-right">
                                         <span t-esc="line['debit']"
                                               t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
