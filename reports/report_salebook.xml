@@ -275,17 +275,17 @@
                             </t>
                             <t t-set="total_accounts" t-value="total_accounts+account['balance']"/>
                         </t>
-                        <tr style="font-weight: bold; color:#B3151B; font-size:22px">
+                        <!--tr style="font-weight: bold; color:#B3151B; font-size:22px">
                             <td colspan="4">
                                 <span style="color: white;" t-esc="'..'"/>
-                                <!--span t-esc="account['code']"/-->
+                                <span t-esc="account['code']"/>
                                 <span style="text-transform: uppercase">BALANCE FINAL</span>
                             </td>
                             <td class="text-right">
                                 <span t-esc="total_accounts"
                                 t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                             </td>    
-                        </tr>
+                        </tr-->
                         
                     </tbody>
                     
