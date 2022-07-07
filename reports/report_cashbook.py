@@ -54,7 +54,7 @@ class ReportCashBook(models.AbstractModel):
                     LEFT JOIN res_partner p ON (l.partner_id = p.id) 
                     JOIN account_journal j ON (l.journal_id = j.id) 
                     JOIN account_account acc ON (l.account_id = acc.id) 
-                    WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
+                    WHERE m.create_uid IN %s AND l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference', 'l.room_ref')
             # WHERE l.account_id IN %s""" + filters + 'GROUP BY l.account_id, l.pos_reference')
             # params = (tuple(accounts.ids),) + tuple(init_where_params)
             params = (tuple([self._context.get('create_user_id', 0)]),) + (tuple(accounts.ids),) + tuple(init_where_params)
@@ -88,7 +88,7 @@ class ReportCashBook(models.AbstractModel):
                         LEFT JOIN res_partner p ON (l.partner_id=p.id)\
                         JOIN account_journal j ON (l.journal_id=j.id)\
                         JOIN account_account acc ON (l.account_id = acc.id) \
-                        WHERE m.create_uid IN %s AND l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date_with_time, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
+                        WHERE m.create_uid IN %s AND l.account_id IN %s ''' + filters + ''' GROUP BY l.id, l.account_id, l.date_with_time, j.code, l.currency_id, l.amount_currency, l.ref, l.name, l.pos_reference, 'l.room_ref', m.name, c.symbol, p.name ORDER BY ''' + sql_sort)
         # params = (tuple(accounts.ids),) + tuple(where_params)
         params = (tuple([self._context.get('create_user_id', 0)]),) + (tuple(accounts.ids),) + tuple(where_params)
         cr.execute(sql, params)
