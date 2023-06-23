@@ -37,7 +37,7 @@ class AccountCashBookReport(models.TransientModel):
         required=True, default='sort_date')
     initial_balance = fields.Boolean(string='Include Initial Balances', default=True,
                                      help='If you selected date, this field allow you to add a row to display the amount of debit/credit/balance that precedes the filter you\'ve set.')
-    create_user_id = fields.Many2one('res.users', string='Created By', default=lambda self: self.env.user)
+    create_user_id = fields.Many2one('res.users', string='Creado por')
 
     @api.onchange('account_ids')
     def onchange_account_ids(self):
